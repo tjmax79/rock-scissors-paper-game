@@ -29,15 +29,17 @@ function playRound (humanChoice, computerChoice) {
 
     if(human === computer) {
         console.log(`Its a tie you both choose ${human}`);
-        return;
+        return "tie";
     }else if (
         (human === "rock" && computer ==="scissors") || (human === "paper" && computer === "rock") || (human === "scissors" && computer === "paper")
     ){
         humanScore++;
         console.log(`You win this round! ${human} beats ${computer}`);
+          return "human"
     }else {
         computerScore++;
         console.log(`computer wins this round! ${computer} beats human`);
+        return 'computer'
     }
     
     console.log(`Score - You: ${humanScore}, Computer: ${computerScore}`);
@@ -58,10 +60,10 @@ function playGame(){
         const computer = getComputerChoice()
         const winner = playRound(human,computer)
 
-        if (winner === human) {
+        if (winner === "human") {
             humanScore++;
 
-        }else if (winner === computer){
+        }else if (winner === "computer"){
             computerScore++
 
         }
