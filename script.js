@@ -1,23 +1,24 @@
- let choice1 = "rock";
+    let choice1 = "rock";
     let choice2 = "paper";
     let choice3 = "scissors";
+
+    
+    let humanScore = 0
+    let computerScore = 0
    
     
     function getComputerChoice () {
-        // let randomPick; nb: dissabled because of a better approach
         const randomNumber = Math.floor(Math.random()*3);
     
     if(randomNumber===0){
-      //  randomPick = choice1
       return choice1
+
     }else if(randomNumber ===1){
-        // randomPick = choice2+
         return choice2
+
     }else {
-        // randomPick = choice3
         return choice3
     }
-    // return randomPick
 }
 
   function getHumanChoice () {
@@ -32,68 +33,112 @@
        }
   }
  
-
-
-
-
 function playGame () {
- 
-    let humanScore = 0
-    let computerScore = 0
-  
-   function playRound (humanChoice, computerChoice){
-   
-   humanChoice = humanChoice.toLowerCase();
+  function playRound (humanChoice, computerChoice){
+    humanChoice = humanChoice.toLowerCase();
+
+    let result = ""
+
    if (humanChoice === choice1 && computerChoice === choice2){
-    console.log('Paper beats rock - Computer wins');
+    result = 'Paper beats rock - Computer wins';
     computerScore++
     
    }else if(humanChoice === choice2 && computerChoice === choice3){
-    console.log('Scissors beats paper - Computer wins');
+    result ='Scissors beats paper - Computer wins';
     computerScore++
     
    }else if (humanChoice === choice3 && computerChoice === choice1) {
-    console.log("Rock beats scissors - Computer wins");
+    result = "Rock beats scissors - Computer wins";
     computerScore++
     
    }else if (humanChoice === choice2 && computerChoice === choice1){
-    console.log("Paper beats rock - Human wins");
+    result = "Paper beats rock - Human wins";
     humanScore++
 
    }else if(humanChoice === choice3 && computerChoice === choice2){
-    console.log("Scissors beats paper - Human wins");
+    result = "Scissors beats paper - Human wins";
     humanScore++
 
    }else if (humanChoice === choice1 && computerChoice === choice3){
-    console.log("Rock beats scissors - Human wins");
+    result = "Rock beats scissors - Human wins";
     humanScore++
     
    }else{
-    console.log("it's a tie 📍");
-   }
-    
- }
+    result = "it's a tie 📍";
+   }    
+ resultDiv.textContent = `${result} | Score — Human: ${humanScore}, Computer: ${computerScore}`;
+  
 
 
+if (humanScore === 5 || computerScore === 5) {
+  const winner = humanScore === 5 ? "Human wins the game!" : "Computer wins the game!";
 
-playRound(getHumanChoice(),getComputerChoice())
-playRound(getHumanChoice(),getComputerChoice())
-playRound(getHumanChoice(),getComputerChoice())
-playRound(getHumanChoice(),getComputerChoice())
-playRound(getHumanChoice(),getComputerChoice())
+  
+  resultDiv.textContent = ""; // Clear previous content
 
+const resultText = document.createElement("p");
+resultText.textContent = `${result} | Score — Human: ${humanScore}, Computer: ${computerScore}`;
 
-console.log("Final Score:");
-console.log("Human:", humanScore);
-console.log("Computer:", computerScore);
+const winnerText = document.createElement("p");
+winnerText.textContent = winner;
+winnerText.style.fontWeight = "bold";
 
-if (humanScore > computerScore) {
-  console.log("Human wins the game!");
-} else if (computerScore > humanScore) {
-  console.log("Computer wins the game!");
-} else {
-  console.log("The game is a tie!");
+resultDiv.appendChild(resultText);
+resultDiv.appendChild(winnerText);
+  btn1.disabled = true;
+  btn2.disabled = true;
+  btn3.disabled = true
 }
+
+  }
+
+const btn1 = document.createElement("button");
+btn1.textContent = "Rock"
+const btn2 = document.createElement("button");
+btn2.textContent = "Paper"
+const btn3 = document.createElement("button");
+btn3.textContent = "Scissors"
+
+document.body.appendChild(btn1)
+document.body.appendChild(btn2)
+document.body.appendChild(btn3)
+
+btn1.style.marginRight = "10px";
+btn2.style.marginRight = "10px";
+btn3.style.marginRight = "10px";
+
+
+
+  const resultDiv = document.createElement("div")
+  resultDiv.style.marginTop = "30px";
+document.body.appendChild(resultDiv)
+
+
+btn1.addEventListener("click",()=>{
+  highlightButton(btn1)
+  playRound("rock",getComputerChoice())
+  
+})
+
+btn2.addEventListener("click", ()=>{
+  highlightButton(btn2)
+  playRound("paper",getComputerChoice())
+  
+})
+
+btn3.addEventListener("click", ()=>{
+  highlightButton(btn3)
+  playRound("scissors",getComputerChoice())
+
+})
+
+function highlightButton(button) {
+  button.style.backgroundColor = "lightblue"; // or any color you like
+  setTimeout(() => {
+    button.style.backgroundColor = ""; // reset after 200ms
+  }, 200);
+
+ }
 
 }
 playGame()
